@@ -1,13 +1,19 @@
 console.info("COMPARE MOVIES!");
 
-async function getMovies(){
-    try{
-        const api = "http://www.omdbapi.com/?apikey=309ca981&s=Blade";
-        const response = await axios.get(api);
-        await console.log(response.data.Search[0]);
-    }catch (e) {
-        console.error(e.message);
+
+const input1 = document.querySelector("#search1");
+
+
+input1.addEventListener("input", debounce(async(k) => {
+    if(k.target.value.length > 0){
+        try{
+            const dropdown = document.querySelector(".first-search-dropdown")
+            const response = await getMovies(k.target.value);
+            const fullInfo = await getMovieInfo(response[0].imdbID)
+            dropdown.style.display = "flex";
+            console.log(response)
+        }catch (e) {
+            console.error(e.message);
+        }
     }
-}
-
-
+}));

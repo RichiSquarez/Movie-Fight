@@ -25,3 +25,50 @@
         }
     }
 }
+
+.app-container{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 30rem;
+    width: 100dvw;
+}
+
+.first-search{
+    flex-basis: 50%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid slateblue;
+    .first-search-dropdown{;
+        width: 25rem;
+        height: 15rem;
+        display: none;
+        flex-direction: column;
+        border: 5px solid black;
+    }
+    label{
+        margin-top: 2rem;
+        height: fit-content;
+    }
+}
+
+.second-search{
+    flex-basis: 50%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid darkslategrey;
+    .second-search-dropdown{
+        width: 25rem;
+        height: 15rem;
+        display: flex;
+        border: 5px solid black;
+    }
+    label{
+        margin-top: 2rem;
+        height: fit-content;
+    }
+}
