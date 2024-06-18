@@ -6,9 +6,6 @@ input1.value = "";
 input1.addEventListener("input", debounce(async(k) => {
     if(k.target.value.length > 0){
         try{
-            const firstSuggest = document.querySelector(".first-search-dropdown .first-suggest");
-            const secondSuggest = document.querySelector(".first-search-dropdown .second-suggest");
-            const thirdSuggest = document.querySelector(".first-search-dropdown .third-suggest");
             const dropdown = document.querySelector(".first-search-dropdown")
 
             const response = await getMovies(k.target.value);
