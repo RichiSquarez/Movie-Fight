@@ -7,7 +7,6 @@ const getMovies = async (search) =>{
                 type: "movie"
             }
         });
-        await console.log(response.data.Search);
         return [await response.data.Search[0], await response.data.Search[1], await response.data.Search[2]];
     }catch (e) {
         console.error(e.message);
