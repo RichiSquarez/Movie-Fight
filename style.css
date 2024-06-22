@@ -90,3 +90,31 @@
         height: fit-content;
     }
 }
+
+.movie_info_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.description_wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .description{
+        font-size: 1.2rem;
+    }
+}
+
+.ratings{
+    display: flex;
+    height: 2rem;
+    width: 150px;
+    margin-left: 22rem;
+    justify-content: flex-end;
+    div{
+        display: flex;
+        align-items: center;
+    }
+}

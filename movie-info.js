@@ -21,7 +21,8 @@ const getMovieInfo = async (id) => {
                 i: id
             }
         })
-        console.log(await response.data);
+        return response.data;
+        // console.log(await response.data);
     }catch (e) {
         console.error(e.message);
     }
