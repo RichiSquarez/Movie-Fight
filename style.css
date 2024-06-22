@@ -15,6 +15,7 @@
         justify-content: flex-end;
         align-items: center;
         display:flex;
+        user-select: none;
         h1{
             color: whitesmoke;
             margin-right: 1rem;
@@ -93,17 +94,22 @@
 
 .movie_info_wrapper{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
     justify-content: center;
 }
 
 .description_wrapper{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
+    h3{
+        color: #413e3e;
+    }
     .description{
         font-size: 1.2rem;
+        color: gray;
     }
 }
 
@@ -117,4 +123,10 @@
         display: flex;
         align-items: center;
     }
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

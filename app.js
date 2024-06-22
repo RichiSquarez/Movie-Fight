@@ -5,10 +5,13 @@ input1.value = "";
 async function movieInfo (m){
     const movie = await m;
     console.log(movie)
+
     const wrapper = document.createElement("div");
     wrapper.classList.add("movie_info_wrapper");
     const title = document.createElement("h2");
     title.innerText = `${await movie.Title} (${await movie.Year})`;
+    const genres = document.createElement("h3");
+    genres.innerText = `${await movie.Genre}`;
     const descriptionWrapper = document.createElement("div");
     descriptionWrapper.classList.add("description_wrapper");
     const poster = document.createElement("img");
@@ -19,8 +22,16 @@ async function movieInfo (m){
     const description = document.createElement("p");
     description.innerText = `${movie.Plot}`;
     description.classList.add("description");
-    descriptionWrapper.append(poster);
-    descriptionWrapper.append(description);
+
+    const awards = document.createElement("p");
+    if(movie.Awards === "N/A"){
+        awards.innerText = "No awards.";
+    }else{
+        awards.innerText = `${movie.Awards}`;
+    }
+    awards.style.fontStyle = "italic";
+    awards.style.marginTop = "4.5rem"
+
 
     const ratings = document.createElement("div");
     ratings.classList.add("ratings");
@@ -31,6 +42,7 @@ async function movieInfo (m){
     imdbRating.innerText = `${movie.imdbRating}`
     imdbImg.src = "https://static-00.iconduck.com/assets.00/imdb-icon-2048x2048-e3h400jc.png";
     imdbImg.setAttribute("width", "25");
+    imdbImg.setAttribute("alt", "poster");
     imdb.append(imdbImg, imdbRating);
     imdb.style.marginRight = "0.5rem";
     //imdb
@@ -49,14 +61,19 @@ async function movieInfo (m){
     }
     metaCriticImg.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Metacritic_logo_original.svg/1200px-Metacritic_logo_original.svg.png";
     metaCriticImg.setAttribute("width", "25");
+    metaCriticImg.setAttribute("alt", "poster");
     metaCritic.append(metaCriticImg, metaCriticRating);
     //metaCritic
     ratings.append(imdb, metaCritic)
 
 
-    wrapper.append(title);
+    wrapper.append(poster);
+    descriptionWrapper.append(title);
+    descriptionWrapper.append(genres);
+    descriptionWrapper.append(description);
+    descriptionWrapper.append(awards);
+    descriptionWrapper.append(ratings);
     wrapper.append(descriptionWrapper);
-    wrapper.append(ratings);
     document.querySelector(".first-search").appendChild(wrapper);
 }
 
@@ -67,21 +84,26 @@ input1.addEventListener("input", debounce(async(k) => {
             const dropdown = document.querySelector(".first-search-dropdown")
             dropdown.innerHTML = '';
             dropdown.style.display = "flex";
+            if(document.querySelector(".first-search").contains(document.querySelector(".movie_info_wrapper"))){
+                document.querySelector(".movie_info_wrapper").style.display = "none";
+            }
             const response = await getMovies(k.target.value);
-
             for(let movie of response){
                 const div = document.createElement("div");
                 const imageSRC = movie.Poster === 'N/A' ? '' : movie.Poster;
                 div.classList.add("first-search-dropdown-item");
 
                 div.innerHTML = `
-                    <img src="${imageSRC}" height="80">
+                    <img src="${imageSRC}" height="80" alt="img">
                     <p>${await movie.Title} (${await movie.Year})</p>
                 `
 
                 div.addEventListener("click", async (e) => {
                     document.querySelector(".first-search-dropdown").style.display = "none";
                     input1.value = "";
+                    if(document.querySelector(".first-search").contains(document.querySelector(".movie_info_wrapper"))){
+                        document.querySelector(".first-search .movie_info_wrapper").remove();
+                    }
                     await movieInfo(getMovieInfo(movie.imdbID));
                 })
 
@@ -100,5 +122,6 @@ input1.addEventListener("input", debounce(async(k) => {
 document.addEventListener("click", (e) => {
     if(!document.querySelector(".first-search-dropdown").contains(e.target)){
         document.querySelector(".first-search-dropdown").style.display = 'none';
+        document.querySelector(".movie_info_wrapper").style.display = "flex";
     }
 })
