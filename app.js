@@ -25,12 +25,15 @@ async function movieInfo (m){
 
     const awards = document.createElement("p");
     if(movie.Awards === "N/A"){
-        awards.innerText = "No awards.";
+        awards.innerText = "This film have got no awards.";
     }else{
-        awards.innerText = `${movie.Awards}`;
+        awards.innerText = `${movie.Awards}`;    awards.style.fontStyle = "italic";
+        awards.style.color = "gold";
+        awards.style.textDecoration = "underline";
+        awards.style.textShadow = "1px 1px 12px gold";
+        awards.style.marginTop = "4.5rem";
     }
-    awards.style.fontStyle = "italic";
-    awards.style.marginTop = "4.5rem"
+
 
 
     const ratings = document.createElement("div");
@@ -41,6 +44,10 @@ async function movieInfo (m){
     const imdbRating = document.createElement("span");
     imdbRating.innerText = `${movie.imdbRating}`
     imdbImg.src = "https://static-00.iconduck.com/assets.00/imdb-icon-2048x2048-e3h400jc.png";
+    imdbImg.addEventListener("click", () => {
+        window.open(`https://www.imdb.com/title/${movie.imdbID}/`, "_blank")
+    })
+    imdbImg.style.cursor = "pointer";
     imdbImg.setAttribute("width", "25");
     imdbImg.setAttribute("alt", "poster");
     imdb.append(imdbImg, imdbRating);
@@ -52,14 +59,28 @@ async function movieInfo (m){
     const metaCriticImg = document.createElement("img");
     const metaCriticRating = document.createElement("span");
     metaCriticRating.innerText = `${movie.Metascore}`;
-    if(parseInt(metaCriticRating.innerText) > 50){
-        metaCriticRating.style.backgroundColor = "green";
-        metaCriticRating.style.color = "white";
+    if(metaCriticRating.innerText !== "N/A"){
+        if(parseInt(metaCriticRating.innerText) > 75){
+            metaCriticRating.style.backgroundColor = "green";
+            metaCriticRating.style.color = "white";
+        }
+        else if(parseInt(metaCriticRating.innerText) > 50 && parseInt(metaCriticRating.innerText) < 75){
+            metaCriticRating.style.backgroundColor = "orange";
+            metaCriticRating.style.color = "white";
+        }
+        else{
+            metaCriticRating.style.backgroundColor = "red";
+            metaCriticRating.style.color = "white";
+        }
     }else{
-        metaCriticRating.style.backgroundColor = "red";
-        metaCriticRating.style.color = "white";
+        metaCriticRating.innerText = "No data";
     }
+
     metaCriticImg.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Metacritic_logo_original.svg/1200px-Metacritic_logo_original.svg.png";
+    metaCriticImg.addEventListener("click", () => {
+        window.open(`https://www.metacritic.com/search/${movie.Title}/`, "_blank");
+    })
+    metaCriticImg.style.cursor = "pointer";
     metaCriticImg.setAttribute("width", "25");
     metaCriticImg.setAttribute("alt", "poster");
     metaCritic.append(metaCriticImg, metaCriticRating);
@@ -122,6 +143,6 @@ input1.addEventListener("input", debounce(async(k) => {
 document.addEventListener("click", (e) => {
     if(!document.querySelector(".first-search-dropdown").contains(e.target)){
         document.querySelector(".first-search-dropdown").style.display = 'none';
-        document.querySelector(".movie_info_wrapper").style.display = "flex";
+        document.querySelector(".first-search .movie_info_wrapper").style.display = "flex";
     }
 })
