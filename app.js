@@ -1,6 +1,8 @@
 console.info("COMPARE MOVIES!");
 const input1 = document.querySelector("#search1");
+const input2 = document.querySelector("#search2");
 input1.value = "";
+input2.value = "";
 
 async function movieInfo (m){
     const movie = await m;
@@ -95,7 +97,8 @@ async function movieInfo (m){
     descriptionWrapper.append(awards);
     descriptionWrapper.append(ratings);
     wrapper.append(descriptionWrapper);
-    document.querySelector(".first-search").appendChild(wrapper);
+    // document.querySelector(".first-search").appendChild(wrapper);
+    return wrapper;
 }
 
 
@@ -125,7 +128,8 @@ input1.addEventListener("input", debounce(async(k) => {
                     if(document.querySelector(".first-search").contains(document.querySelector(".movie_info_wrapper"))){
                         document.querySelector(".first-search .movie_info_wrapper").remove();
                     }
-                    await movieInfo(getMovieInfo(movie.imdbID));
+                    // await movieInfo(getMovieInfo(movie.imdbID));
+                    document.querySelector(".first-search").append(await movieInfo(getMovieInfo(movie.imdbID)));
                 })
 
                 dropdown.append(div);
@@ -140,9 +144,51 @@ input1.addEventListener("input", debounce(async(k) => {
     }
 }));
 
+input2.addEventListener("input", debounce(async(k) => {
+    if(k.target.value.length > 0){
+        try{
+            const dropdown = document.querySelector(".second-search-dropdown")
+            dropdown.innerHTML = '';
+            dropdown.style.display = "flex";
+            if(document.querySelector(".second-search").contains(document.querySelector(".second-search .movie_info_wrapper"))){
+                document.querySelector(".second-search .movie_info_wrapper").style.display = "none";
+            }
+            const response = await getMovies(k.target.value);
+            for(let movie of response){
+                const div = document.createElement("div");
+                const imageSRC = movie.Poster === 'N/A' ? '' : movie.Poster;
+                div.classList.add("second-search-dropdown-item");
+
+                div.innerHTML = `
+                    <img src="${imageSRC}" height="80" alt="img">
+                    <p>${await movie.Title} (${await movie.Year})</p>
+                `
+
+                div.addEventListener("click", async (e) => {
+                    document.querySelector(".second-search-dropdown").style.display = "none";
+                    input1.value = "";
+                    if(document.querySelector(".second-search").contains(document.querySelector(".second-search .movie_info_wrapper"))){
+                        document.querySelector(".second-search .movie_info_wrapper").remove();
+                    }
+                    // await movieInfo(getMovieInfo(movie.imdbID));
+                    document.querySelector(".second-search").append(await movieInfo(getMovieInfo(movie.imdbID)));
+                })
+                dropdown.append(div);
+            }
+        }catch (e) {
+            console.error(e.message);
+        }
+    }
+}))
+
+
 document.addEventListener("click", (e) => {
     if(!document.querySelector(".first-search-dropdown").contains(e.target)){
         document.querySelector(".first-search-dropdown").style.display = 'none';
         document.querySelector(".first-search .movie_info_wrapper").style.display = "flex";
+    }
+    if(!document.querySelector(".second-search-dropdown").contains(e.target)){
+        document.querySelector(".second-search-dropdown").style.display = 'none';
+        document.querySelector(".second-search .movie_info_wrapper").style.display = "flex";
     }
 })

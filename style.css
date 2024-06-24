@@ -83,8 +83,23 @@
     .second-search-dropdown{
         width: 25rem;
         height: 15rem;
-        display: flex;
-        border: 5px solid black;
+        display: none;
+        flex-direction: column;
+        /*border: 5px solid black;*/
+        .second-search-dropdown-item{
+            flex-basis: 33%;
+            display: flex;
+            width: 100%;
+            border: 2px solid rebeccapurple;
+            background-color: darkslategray;
+            transition: all .2s;
+            p{
+                color: whitesmoke;
+                text-align: center;
+                height: fit-content;
+                align-self: center;
+            }
+        }
     }
     label{
         margin-top: 2rem;
