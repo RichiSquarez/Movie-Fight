@@ -1,6 +1,7 @@
 console.info("COMPARE MOVIES!");
 const input1 = document.querySelector("#search1");
 const input2 = document.querySelector("#search2");
+const inputType = document.querySelector(".type-container-select");
 input1.value = "";
 input2.value = "";
 
@@ -25,7 +26,7 @@ async function movieInfo (m){
     description.innerText = `${movie.Plot}`;
     description.classList.add("description");
     const boxOffice = document.createElement("p");
-    if(movie.BoxOffice === "N/A"){
+    if(movie.BoxOffice === "N/A" || !movie.BoxOffice){
         boxOffice.innerText = `No info about box office - ${movie.Country}`;
     }else{
         boxOffice.innerText = `${movie.BoxOffice} - ${movie.Country}`;
@@ -116,11 +117,23 @@ async function movieInfo (m){
 
 
 input1.addEventListener("input", debounce(async (k) => {
-    await autoComplete(document.querySelector(".first-search"),[await getMovies, await getMovieInfo], k)
+    await autoComplete(document.querySelector(".first-search"),[getMovies, getMovieInfo], (suggest) =>{
+        const imageSRC = suggest.Poster === 'N/A' ? '' : suggest.Poster;
+        return `
+                        <img src="${imageSRC}" height="80" alt="img">
+                        <p>${suggest.Title} (${suggest.Year})</p>
+                    `
+    }, k)
 }));
 
 input2.addEventListener("input", debounce(async (k) => {
-    await autoComplete(document.querySelector(".second-search"), [getMovies, getMovieInfo], k)
+    await autoComplete(document.querySelector(".second-search"), [getMovies, getMovieInfo], (suggest) =>{
+        const imageSRC = suggest.Poster === 'N/A' ? '' : suggest.Poster;
+        return `
+                        <img src="${imageSRC}" height="80" alt="img">
+                        <p>${suggest.Title} (${suggest.Year})</p>
+                    `
+    }, k)
 }))
 
 

@@ -1,10 +1,10 @@
-const getMovies = async (search) =>{
+const getMovies = async (search, type) =>{
     try{
         const response = await axios.get("http://www.omdbapi.com/", {
             params: {
                 apikey: "309ca981",
                 s: search,
-                type: "movie"
+                type: type
             }
         });
         return [await response.data.Search[0], await response.data.Search[1], await response.data.Search[2]];

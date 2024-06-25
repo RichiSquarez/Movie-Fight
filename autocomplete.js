@@ -1,4 +1,4 @@
-async function autoComplete(root, api = [], key){
+async function autoComplete(root, api = [], renderOption, key){
     if(key.target.value.length > 0){
         try{
                 const dropdown = document.createElement("div");
@@ -14,11 +14,10 @@ async function autoComplete(root, api = [], key){
                     document.querySelector(`${rootClass} .movie_info_wrapper`).style.display = "none";
                 }
                 root.append(dropdown);
-                const response = await api[0](key.target.value);
+                const response = await api[0](key.target.value, inputType.value);
                 // You have to modify this with the properties given by api you're using
-                for(let movie of response){
+                for(let suggest of response){
                     const div = document.createElement("div");
-                    const imageSRC = movie.Poster === 'N/A' ? '' : movie.Poster;
                     div.classList.add("search-dropdown-item");
                     //         flex-basis: 33%;
                     //         display: flex;
@@ -26,12 +25,7 @@ async function autoComplete(root, api = [], key){
                     //         border: 2px solid rebeccapurple;
                     //         background-color: darkslategray;
                     //         transition: all .2s;
-
-                    div.innerHTML = `
-                        <img src="${imageSRC}" height="80" alt="img">
-                        <p>${await movie.Title} (${await movie.Year})</p>
-                    `
-
+                    div.innerHTML = renderOption(suggest);
                     div.addEventListener("click", async (e) => {
                         document.querySelector(`${rootClass} .search-dropdown`).remove();
                         input1.value = "";
@@ -39,7 +33,7 @@ async function autoComplete(root, api = [], key){
                             document.querySelector(`${rootClass} .movie_info_wrapper`).remove();
                         }
                         // await movieInfo(getMovieInfo(movie.imdbID));
-                        document.querySelector(`${rootClass}`).append(await movieInfo(api[1](movie.imdbID)));
+                        document.querySelector(`${rootClass}`).append(await movieInfo(api[1](suggest.imdbID)));
                     })
 
                     dropdown.append(div);
