@@ -1,4 +1,4 @@
-async function autoComplete(root, key){
+async function autoComplete(root, api = [], key){
     if(key.target.value.length > 0){
         try{
                 const dropdown = document.createElement("div");
@@ -14,7 +14,8 @@ async function autoComplete(root, key){
                     document.querySelector(`${rootClass} .movie_info_wrapper`).style.display = "none";
                 }
                 root.append(dropdown);
-                const response = await getMovies(key.target.value);
+                const response = await api[0](key.target.value);
+                // You have to modify this with the properties given by api you're using
                 for(let movie of response){
                     const div = document.createElement("div");
                     const imageSRC = movie.Poster === 'N/A' ? '' : movie.Poster;
@@ -38,7 +39,7 @@ async function autoComplete(root, key){
                             document.querySelector(`${rootClass} .movie_info_wrapper`).remove();
                         }
                         // await movieInfo(getMovieInfo(movie.imdbID));
-                        document.querySelector(`${rootClass}`).append(await movieInfo(getMovieInfo(movie.imdbID)));
+                        document.querySelector(`${rootClass}`).append(await movieInfo(api[1](movie.imdbID)));
                     })
 
                     dropdown.append(div);

@@ -116,11 +116,11 @@ async function movieInfo (m){
 
 
 input1.addEventListener("input", debounce(async (k) => {
-    await autoComplete(document.querySelector(".first-search"), k)
+    await autoComplete(document.querySelector(".first-search"),[await getMovies, await getMovieInfo], k)
 }));
 
 input2.addEventListener("input", debounce(async (k) => {
-    await autoComplete(document.querySelector(".second-search"), k)
+    await autoComplete(document.querySelector(".second-search"), [getMovies, getMovieInfo], k)
 }))
 
 
