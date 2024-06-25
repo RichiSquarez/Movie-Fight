@@ -24,16 +24,28 @@ async function movieInfo (m){
     const description = document.createElement("p");
     description.innerText = `${movie.Plot}`;
     description.classList.add("description");
+    const boxOffice = document.createElement("p");
+    if(movie.BoxOffice === "N/A"){
+        boxOffice.innerText = `No info about box office - ${movie.Country}`;
+    }else{
+        boxOffice.innerText = `${movie.BoxOffice} - ${movie.Country}`;
+    }
+    boxOffice.classList.add("description");
 
     const awards = document.createElement("p");
     if(movie.Awards === "N/A"){
+        awards.style.marginTop = "4.5rem";
         awards.innerText = "This film have got no awards.";
+        awards.style.position = "absolute";
+        awards.style.bottom = "0%";
     }else{
         awards.innerText = `${movie.Awards}`;    awards.style.fontStyle = "italic";
         awards.style.color = "gold";
         awards.style.textDecoration = "underline";
         awards.style.textShadow = "1px 1px 12px gold";
         awards.style.marginTop = "4.5rem";
+        awards.style.position = "absolute";
+        awards.style.bottom = "0%";
     }
 
 
@@ -94,10 +106,10 @@ async function movieInfo (m){
     descriptionWrapper.append(title);
     descriptionWrapper.append(genres);
     descriptionWrapper.append(description);
+    descriptionWrapper.append(boxOffice);
     descriptionWrapper.append(awards);
     descriptionWrapper.append(ratings);
     wrapper.append(descriptionWrapper);
-    // document.querySelector(".first-search").appendChild(wrapper);
     return wrapper;
 }
 
