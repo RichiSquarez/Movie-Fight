@@ -3,7 +3,7 @@
 Compare movies and find out which one reigns supreme!
 <h2>About</h2>
 
-Movie Fight is a web application that allows users to compare movies and find out which one is the most popular. The application uses an API to gather information about the movies and provides a user-friendly interface to display the results.
+Movie Fight is a web application that allows users to compare movies and find out which one is the most popular. The application uses an OMDb API to gather information about the movies and provides a user-friendly interface to display the results.
 <h2>Features</h2>
 <ul>
   <li>Compare movies and find out which one is the most popular</li>
