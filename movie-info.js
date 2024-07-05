@@ -1,6 +1,6 @@
 const getMovies = async (search, type) =>{
     try{
-        const response = await axios.get("https://www.omdbapi.com/", {
+        const response = await axios.get("//www.omdbapi.com/", {
             params: {
                 apikey: "309ca981",
                 s: search,
@@ -15,7 +15,7 @@ const getMovies = async (search, type) =>{
 
 const getMovieInfo = async (id) => {
     try{
-        const response = await axios.get("https://www.omdbapi.com/", {
+        const response = await axios.get("//www.omdbapi.com/", {
             params: {
                 apikey: "309ca981",
                 i: id
