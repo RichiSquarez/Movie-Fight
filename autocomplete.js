@@ -1,6 +1,9 @@
 async function autoComplete(root, api = [], renderOption, key){
     if(key.target.value.length > 0){
         try{
+                if(document.querySelector(`.${root.className}`).contains(document.querySelector(`.${root.className} .search-dropdown`))){
+                    document.querySelector(`.${root.className} .search-dropdown`).remove();
+                }
                 const dropdown = document.createElement("div");
                 const rootClass = `.${root.getAttribute("class")}`;
                 dropdown.classList.add("search-dropdown");
